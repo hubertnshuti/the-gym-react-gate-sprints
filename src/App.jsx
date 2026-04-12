@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 function useToggle(initValue) {
-  const [value, setValue] = useState(initValue);
+  const [value, setValue] =  useState(initValue);
 
-  const toggle = () => setValue(prev => !prev);
+  const toggle = () => setValue(prev => !prev)
 
   return [value, toggle];
 }
@@ -13,16 +13,60 @@ function App() {
 
   return (
     <>
-      <button onClick={toggleIsOpen}>{isOpen? 'Close' : 'Open'}</button>
+      <button onClick={toggleIsOpen}>{isOpen? 'Close': 'Open'}</button>
 
-      {isOpen && (
-        <h1>This will be visible only upon Open</h1>
-      )}
+    {isOpen && (
+      <h1>This will display only when open is clicked</h1>
+    )}
     </>
-  );
+  )
 }
-
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useState } from "react";
+
+// function useToggle(initValue) {
+//   const [value, setValue] = useState(initValue);
+
+//   const toggle = () => setValue(prev => !prev);
+
+//   return [value, toggle];
+// }
+
+// function App() {
+//   const [isOpen, toggleIsOpen] = useToggle(false);
+
+//   return (
+//     <>
+//       <button onClick={toggleIsOpen}>{isOpen? 'Close' : 'Open'}</button>
+
+//       {isOpen && (
+//         <h1>This will be visible only upon Open</h1>
+//       )}
+//     </>
+//   );
+// }
+
+// export default App;
 
 
 
