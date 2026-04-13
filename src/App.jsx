@@ -1,61 +1,118 @@
+// Create a custom reusable hook That can be used to fetch data on API Which will help in cleaning up this component or any that looks like it.
+
+import React, { useState, useEffect } from 'react';
+
+function useFetch(url) {
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+        setLoading(true);
+        try {
+            const response = await fetch(url);
+            const result = await response.json();
+            setData(result.data);
+            setLoading(false);
+        } catch (error) {
+            setError(error); 
+            setLoading(false);
+        }
+        };
+        fetchData();
+    }, [url]);
+
+    return [data, error, loading]
+  }
+
+function Employees(){
+  const [data, error, loading] = useFetch('https://dummy.restapiexample.com/api/v1/employees')
+
+  if (loading) return <p>Loading.....</p>;
+  if (error) return <p>Error.....{error.message}</p>; 
+  return (
+    <div className='App'>
+      <h1>Hello React.</h1>
+      <h2>Start editing to see some magic happen!</h2>
+      {data && data.map((ele) => (
+        <p key={ele.id}>{ele.employee_name}</p>
+      ))}
+    </div>
+  );
+}
+
+export default Employees;
+
+
+
+
+
+
+
+
+
+
+
+
 // We have two lists of names, and we want to transfer every name in the first list to the second list and every two seconds we want to send one name, what would you add or change in these codes to make that happen?
 
-import { useEffect, useState } from "react";
-const NameTransferLists = () => {
+// import { useEffect, useState } from "react";
+// const NameTransferLists = () => {
 
-const [firstList, setFirstList] = useState([
-"Alice Johnson",
-"Bob Smith",
-"Charlie Brown",
-"Diana Prince",
-"Ethan Hunt",
-])
-const [secondList, setSecondList] = useState([]);
+// const [firstList, setFirstList] = useState([
+// "Alice Johnson",
+// "Bob Smith",
+// "Charlie Brown",
+// "Diana Prince",
+// "Ethan Hunt",
+// ])
+// const [secondList, setSecondList] = useState([]);
 
-useEffect(() => {
+// useEffect(() => {
 
-  const intervalId = setInterval(() => {
-    const newName = firstList[0]
+//   const intervalId = setInterval(() => {
+//     const newName = firstList[0]
 
-    setFirstList(prevList => prevList.slice(1))
-    setSecondList(prev => [...prev, newName])
-  }, 2000)
+//     setFirstList(prevList => prevList.slice(1))
+//     setSecondList(prev => [...prev, newName])
+//   }, 2000)
 
-  return () => clearInterval(intervalId)
-}, [firstList])
+//   return () => clearInterval(intervalId)
+// }, [firstList])
 
 
-return (
-<div className="max-w-4xl mx-auto p-8">
-<div className="grid grid-cols-2 gap-8">
-{/* First List */}
-<div className="bg-blue-100 p-6 rounded-lg">
-<h2 className="text-xl font-bold text-blue-800 mb-4">First List</h2>
-<ul className="space-y-2">
-{firstList.map((name, index) => (
-<li key={`first-${name}-${index}`} className="text-blue-700">
-{name}
-</li>
-))}
-</ul>
-</div>
-   {/* Second List */}
-    <div className="bg-green-100 p-6 rounded-lg">
-      <h2 className="text-xl font-bold text-green-800 mb-4">Second List</h2>
-      <ul className="space-y-2">
-        {secondList.map((name, index) => (
-          <li key={`second-${name}-${index}`} className="text-green-700">
-            {name}
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
-</div>
-);
-};
+// return (
+// <div className="max-w-4xl mx-auto p-8">
+// <div className="grid grid-cols-2 gap-8">
+// {/* First List */}
+// <div className="bg-blue-100 p-6 rounded-lg">
+// <h2 className="text-xl font-bold text-blue-800 mb-4">First List</h2>
+// <ul className="space-y-2">
+// {firstList.map((name, index) => (
+// <li key={`first-${name}-${index}`} className="text-blue-700">
+// {name}
+// </li>
+// ))}
+// </ul>
+// </div>
+//    {/* Second List */}
+//     <div className="bg-green-100 p-6 rounded-lg">
+//       <h2 className="text-xl font-bold text-green-800 mb-4">Second List</h2>
+//       <ul className="space-y-2">
+//         {secondList.map((name, index) => (
+//           <li key={`second-${name}-${index}`} className="text-green-700">
+//             {name}
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   </div>
+// </div>
+// );
+// };
 
-export default NameTransferLists;
+// export default NameTransferLists;
 
 
 
